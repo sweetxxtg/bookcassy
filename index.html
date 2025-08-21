@@ -254,27 +254,35 @@
 }
 
     /* SWIPER */
-    .swiper {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-    .swiper-slide {
-      display: flex;
-      justify-content: center;
-    }
-    .swiper-slide img {
-      width: 100%;
-      max-width: 320px;
-      border-radius: 8px;
-    }
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: #000;
-    }
-    .swiper-pagination-bullet {
-      background: #000;
-    }
+.swiper {
+  width: 100%;
+  max-width: 900px; /* wider to fit 3 images */
+  margin: 0 auto;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  width: 100%;
+  max-width: 250px;   /* control image size */
+  height: auto;
+  border-radius: 0;   /* remove rounded corners */
+  object-fit: cover;  /* keep image neat */
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000;
+}
+
+.swiper-pagination-bullet {
+  background: #000;
+}
+
 
     /* ABOUT */
     .about {
@@ -389,16 +397,20 @@
     <div class="divider"></div>
 
     <!-- Swiper -->
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
-        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
-        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>
 
     <!-- About -->
     <div class="about">
@@ -461,18 +473,19 @@
     }
 
     var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      }
-    });
+  slidesPerView: 3,      // show 3 images side by side
+  spaceBetween: 15,      // gap between images
+  slidesPerGroup: 3,     // move 3 at a time
+  loop: false,           // stop infinite loop
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  }
+});
   </script>
 </body>
 </html>
