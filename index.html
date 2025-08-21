@@ -684,24 +684,25 @@
 <script>
   // ===== Show Sections =====
   function goHome() {
-  document.getElementById("landing").style.display = "block";
+  // Reset landing page to its default CSS, not forced "block"
+  document.getElementById("landing").style.display = "";
   document.getElementById("profile").classList.remove("active");
   document.getElementById("appointment").style.display = "none";
-  localStorage.setItem("currentPage", "home"); // 👈 save current page
+  localStorage.setItem("currentPage", "home");
 }
 
 function showProfile() {
   document.getElementById("landing").style.display = "none";
   document.getElementById("profile").classList.add("active");
   document.getElementById("appointment").style.display = "none";
-  localStorage.setItem("currentPage", "profile"); // 👈 save
+  localStorage.setItem("currentPage", "profile");
 }
 
 function showAppointment() {
   document.getElementById("landing").style.display = "none";
   document.getElementById("profile").classList.remove("active");
   document.getElementById("appointment").style.display = "block";
-  localStorage.setItem("currentPage", "appointment"); // 👈 save
+  localStorage.setItem("currentPage", "appointment");
 }
 
   // ===== Toggle Menu (☰ ↔ ✖) =====
@@ -953,15 +954,14 @@ if (paymentMethods.length) {
     }
   });
   
-  // Restore last section on reload
-window.addEventListener("load", () => {
+  window.addEventListener("load", () => {
   const currentPage = localStorage.getItem("currentPage");
   if (currentPage === "profile") {
     showProfile();
   } else if (currentPage === "appointment") {
     showAppointment();
   } else {
-    goHome(); // default to home
+    goHome(); // falls back, but landing stays styled correctly
   }
 });
 </script>
