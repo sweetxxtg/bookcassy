@@ -345,6 +345,33 @@
       footer { flex-direction: column; text-align: center; }
       footer img { margin-bottom: 6px; }
     }
+	
+	#appointment { padding: 20px; max-width: 700px; margin: auto; }
+  .title { font-size: 1.8em; margin-bottom: 15px; text-align:center; }
+  .subtitle { margin-top: 20px; font-size: 1.2em; }
+  .hint { font-size: 0.9em; color: #555; }
+
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+  .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+
+  .rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+  .rate-option { padding: 15px; background: #f4f4f4; text-align: center; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+  .rate-option:hover { background: #eee; }
+  .rate-option.active { border-color: #007BFF; background: #e9f3ff; }
+
+  .rules-box { background: #fffbe7; padding: 15px; border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; }
+  .rules-box h3 { margin-top: 0; color: #d9534f; }
+  .agree-label { display: block; margin-top: 10px; }
+  #continueBtn { margin-top: 10px; padding: 10px 15px; background: #007BFF; color: white; border: none; border-radius: 6px; cursor: pointer; }
+  #continueBtn:disabled { background: #ccc; cursor: not-allowed; }
+
+  .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+  .payment-method { padding: 12px; border: 1px solid #ddd; border-radius: 6px; text-align: center; cursor: pointer; background: #fafafa; transition: 0.3s; }
+  .payment-method:hover { background: #eee; }
+  .payment-method.active { border-color: #28a745; background: #eaffea; }
+  .payment-info { margin-top: 15px; padding: 10px; background: #f1f1f1; border-radius: 6px; font-size: 0.95em; font-weight: 500; }
+  .submit-btn { margin-top: 20px; padding: 12px 20px; width: 100%; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -356,14 +383,88 @@
   </header>
 
   <!-- Landing -->
-  <section class="hero" id="landing">
-    <div class="hero-content">
-      <h1>Cassy Jacquelyn</h1>
-      <p>Here to Turn your fantasies to reality 💋</p>
-      <button class="btn" onclick="showProfile()">My Profile</button>
-      <button class="btn">Book an Appointment</button>
+<section class="hero" id="landing">
+  <div class="hero-content">
+    <h1>Cassy Jacquelyn</h1>
+    <p>Here to Turn your fantasies to reality 💋</p>
+    <button class="btn" onclick="showProfile()">My Profile</button>
+    <button class="btn" onclick="showAppointment()">Book an Appointment</button>
+  </div>
+</section>
+
+<!-- ===== Appointment Booking Section ===== -->
+<section id="appointment" style="display:none;">
+  <h2 class="title">Book an Appointment</h2>
+
+  <form id="appointmentForm">
+    <!-- Name Fields -->
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" name="firstName" required>
     </div>
-  </section>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="lastName" required>
+    </div>
+
+    <!-- Phone & Email -->
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="tel" name="phone" required>
+    </div>
+    <div class="form-group">
+      <label>Email (optional)</label>
+      <input type="email" name="email">
+    </div>
+
+    <!-- Rates -->
+    <h3 class="subtitle">Select Duration</h3>
+    <p class="hint">Click on your preferred booking duration:</p>
+    <div class="rates">
+      <div class="rate-option" data-rate="1hr - $200">1 Hour — $200</div>
+      <div class="rate-option" data-rate="2hrs - $400">2 Hours — $400</div>
+      <div class="rate-option" data-rate="3hrs - $600">3 Hours — $600</div>
+      <div class="rate-option" data-rate="Overnight - $1300">Overnight — $1300</div>
+    </div>
+
+    <!-- Rules / Instructions -->
+    <div id="rulesBox" class="rules-box" style="display:none;">
+      <h3>Please Read Carefully</h3>
+      <p>
+        For safety and security reasons, a <strong>50% deposit</strong> is required upfront to confirm your booking and generate your BOOKING ID-V code for you.<br><br>
+        ✅ You must be <strong>18+</strong><br>
+        ✅ Must be clean & respectful<br>
+        🚫 No law enforcement / cops involved<br>
+        🚫 No robbery, no violence, no illegal activities<br>
+        💎 Professionalism & discretion are guaranteed
+      </p>
+      <label class="agree-label">
+        <input type="checkbox" id="agreeBox"> I agree to the rules above
+      </label>
+      <button type="button" id="continueBtn" disabled>Continue</button>
+    </div>
+
+    <!-- Payment Methods (hidden until agree) -->
+    <div id="paymentSection" style="display:none;">
+      <h3 class="subtitle">Select Payment Method</h3>
+      <div class="payment-methods selectable">
+        <div class="payment-method" data-info="Send via Zelle to: example@email.com"><i class="fas fa-bolt"></i> Zelle</div>
+        <div class="payment-method" data-info="PayPal: paypal.me/example"><i class="fab fa-paypal"></i> PayPal</div>
+        <div class="payment-method" data-info="Venmo: @example"><i class="fab fa-vimeo-v"></i> Venmo</div>
+        <div class="payment-method" data-info="CashApp: $example"><i class="fas fa-dollar-sign"></i> CashApp</div>
+        <div class="payment-method" data-info="Chime: example"><i class="fas fa-credit-card"></i> Chime</div>
+        <div class="payment-method" data-info="Apple Pay: +1 555-555-5555"><i class="fab fa-apple-pay"></i> Apple Pay</div>
+        <div class="payment-method" data-info="Amazon or Visa Gift Cards"><i class="fas fa-gift"></i> Gift Cards</div>
+        <div class="payment-method" data-info="Bitcoin Wallet: 1ABCxyz..."><i class="fab fa-bitcoin"></i> Bitcoin</div>
+      </div>
+	  
+      <!-- Dynamic Payment Instructions -->
+      <div id="paymentInfo" style="display:none; margin-top:15px; background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.15);"></div>
+    </div>
+	
+    <button type="submit" class="submit-btn">Submit Appointment Request</button>
+  </form>
+</section>
 
   <!-- Profile -->
 <section class="profile-page" id="profile">
@@ -499,17 +600,26 @@
 <!-- Footer -->
 <footer>
   <div><img src="https://dcassetcdn.com/design_img/1405396/418/418_7212348_1405396_83342c31_thumbnail.png" alt="Footer Logo"></div>
-  <div>© 2025 YourWebsite.com — All rights reserved</div>
+  <div>© 2025 Pay4booking.com — All rights reserved</div>
 </footer>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+  // ===== Show Sections =====
   function showProfile() {
     document.getElementById("landing").style.display = "none";
     document.getElementById("profile").classList.add("active");
+    document.getElementById("appointment").style.display = "none";
   }
 
+  function showAppointment() {
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("profile").classList.remove("active");
+    document.getElementById("appointment").style.display = "block";
+  }
+
+  // ===== Swiper =====
   var swiper = new Swiper(".mySwiper", {
     slidesPerView: 3,
     spaceBetween: 10,
@@ -527,39 +637,163 @@
     }
   });
 
-  // Lightbox
+  // ===== Lightbox =====
   var lightbox = document.getElementById("lightbox");
   var lightboxImg = document.getElementById("lightbox-img");
   var closeBtn = document.getElementsByClassName("close")[0];
   var currentIndex = 0;
   var images = Array.from(document.querySelectorAll(".swiper-image"));
 
-  // Open lightbox when clicking an image
   images.forEach((img, index) => {
-    img.onclick = function() {
+    img.onclick = function () {
       currentIndex = index;
       lightbox.style.display = "block";
       lightboxImg.src = this.src;
-    }
+    };
   });
 
-  // Close
-  closeBtn.onclick = function() {
-    lightbox.style.display = "none";
+  if (closeBtn) {
+    closeBtn.onclick = function () {
+      lightbox.style.display = "none";
+    };
   }
 
-  // Background click closes
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target == lightbox) {
       lightbox.style.display = "none";
     }
-  }
+    if (event.target.classList.contains("payment-overlay")) {
+      event.target.remove();
+    }
+  };
 
-  // Change image with arrows
   function changeImage(step) {
     currentIndex = (currentIndex + step + images.length) % images.length;
     lightboxImg.src = images[currentIndex].src;
   }
+  window.changeImage = changeImage;
+
+  // ===== Payment Method Selection =====
+  const paymentMethods = document.querySelectorAll(".payment-methods .payment-method");
+
+  if (paymentMethods.length) {
+    paymentMethods.forEach(method => {
+      method.addEventListener("click", function () {
+        paymentMethods.forEach(m => m.classList.remove("active"));
+        this.classList.add("active");
+
+        // Remove existing popup if any
+        const oldPopup = document.querySelector(".payment-overlay");
+        if (oldPopup) oldPopup.remove();
+
+        // Fetch live payment details from your backend
+        // Fetch payment details from your backend
+fetch("https://payment-backend-btqc.onrender.com/payment.json") // 👈 change to your Render URL
+          .then(res => res.json())
+          .then(data => {
+            const overlay = document.createElement("div");
+            overlay.className = "payment-overlay";
+            overlay.style.cssText = `
+              position: fixed;
+              top: 0; left: 0; right: 0; bottom: 0;
+              background: rgba(0,0,0,0.6);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              z-index: 9999;
+            `;
+
+            const box = document.createElement("div");
+            box.style.cssText = `
+              background:#fff;
+              padding:20px;
+              border-radius:12px;
+              box-shadow:0 4px 12px rgba(0,0,0,0.3);
+              max-width:420px;
+              width:90%;
+              font-family:Arial, sans-serif;
+            `;
+
+            box.innerHTML = `
+              <h3 style="margin-top:0; font-size:18px;">Payment Instructions</h3>
+              <ul style="padding-left:20px; margin:10px 0;">
+                <li>Zelle: ${data.zelle}</li>
+                <li>CashApp: ${data.cashapp}</li>
+                <li>Venmo: ${data.venmo}</li>
+                <li>PayPal: ${data.paypal}</li>
+                <li>Chime: ${data.chime}</li>
+                <li>Apple Pay: ${data.applepay}</li>
+                <li>Bitcoin: ${data.bitcoin}</li>
+              </ul>
+              <p><strong>*IMPORTANT*</strong> After payment, please send confirmation with your full name.</p>
+              <button id="closePaymentPopup" style="
+                margin-top:15px;
+                padding:8px 14px;
+                border:none;
+                background:#333;
+                color:#fff;
+                border-radius:6px;
+                cursor:pointer;
+              ">Close</button>
+            `;
+
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            document.getElementById("closePaymentPopup").onclick = () => overlay.remove();
+          })
+          .catch(err => alert("⚠️ Error loading payment details. Please try again."));
+      });
+    });
+  }
+
+  // ===== Appointment Form =====
+  const appointmentForm = document.getElementById("appointmentForm");
+  const rulesBox = document.getElementById("rulesBox");
+  const continueBtn = document.getElementById("continueBtn");
+  const agreeBox = document.getElementById("agreeBox");
+  const paymentSection = document.getElementById("paymentSection");
+
+  if (appointmentForm) {
+    appointmentForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("✅ Your appointment request has been submitted!");
+      appointmentForm.reset();
+      rulesBox.style.display = "none";
+      paymentSection.style.display = "none";
+      const popup = document.querySelector(".payment-overlay");
+      if (popup) popup.remove();
+    });
+  }
+
+  // ===== Rate Selection & Rules =====
+  const rateOptions = document.querySelectorAll(".rate-option");
+  let selectedRate = null;
+
+  rateOptions.forEach(rate => {
+    rate.addEventListener("click", function () {
+      rateOptions.forEach(r => r.classList.remove("active"));
+      this.classList.add("active");
+      selectedRate = this.getAttribute("data-rate");
+      rulesBox.style.display = "block";
+      paymentSection.style.display = "none";
+      const popup = document.querySelector(".payment-overlay");
+      if (popup) popup.remove();
+      continueBtn.disabled = true;
+      agreeBox.checked = false;
+    });
+  });
+
+  agreeBox.addEventListener("change", function () {
+    continueBtn.disabled = !this.checked;
+  });
+
+  continueBtn.addEventListener("click", function () {
+    if (agreeBox.checked) {
+      paymentSection.style.display = "block";
+      window.scrollTo({ top: paymentSection.offsetTop, behavior: "smooth" });
+    }
+  });
 </script>
 </body>
 </html>
