@@ -253,62 +253,30 @@
   margin-right: 10px;
 }
 
-    /* SWIPER */
-.mySwiper {
+    .mySwiper {
   width: 100%;
-  max-width: 1100px;          /* roomy enough for desktop layout */
   margin: 0 auto;
-  padding: 6px 0;             /* a little breathing room */
-}
-
-.mySwiper .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .mySwiper .swiper-slide img {
   width: 100%;
-  max-width: 320px;           /* keep each image modest-sized */
-  height: 220px;              /* consistent height */
-  object-fit: cover;          /* fill nicely without distortion */
-  border-radius: 0;           /* no rounded corners */
+  height: auto;
+  object-fit: contain; /* keeps full image visible */
 }
 
-/* Make images a bit taller on bigger screens */
-@media (min-width: 768px) {
-  .mySwiper .swiper-slide img {
-    max-width: 300px;
-    height: 360px;
-  }
+/* arrows */
+.swiper-button-prev,
+.swiper-button-next {
+  color: gray;
+  width: 24px;
+  height: 24px;
 }
 
-/* Arrows */
-.mySwiper .swiper-button-next,
-.mySwiper .swiper-button-prev {
-  color: #000;
-  width: 36px;
-  height: 36px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Dots BELOW the gallery */
-.mySwiperPagination {
-  position: relative !important; /* keep outside the image area */
-  margin: 12px auto 0;
+/* move dots BELOW images */
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 10px;
   text-align: center;
-  width: 100%;
-  max-width: 1100px;
-}
-
-.mySwiperPagination .swiper-pagination-bullet {
-  background: #000;
-  opacity: 0.3;
-}
-
-.mySwiperPagination .swiper-pagination-bullet-active {
-  opacity: 1;
 }
 
 
@@ -434,12 +402,12 @@
     <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
   </div>
 
-  <!-- Controls -->
-  <div class="swiper-button-next"></div>
+  <!-- arrows -->
   <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
 </div>
 
-<!-- Pagination OUTSIDE swiper -->
+<!-- dots go BELOW swiper -->
 <div class="swiper-pagination"></div>
 
     <!-- About -->
@@ -503,16 +471,14 @@
     }
 
     var swiper = new Swiper(".mySwiper", {
-    loop: false,
-    spaceBetween: 12,
+    loop: true,
+    spaceBetween: 10,
+    slidesPerView: 3,   // mobile shows 3
 
-    /* Mobile-first: 1 image per view (5 dots) */
-    slidesPerView: 1,
-
-    /* Grow to 2 then 3 per view as screen gets wider */
     breakpoints: {
-      640: { slidesPerView: 2 },
-      900: { slidesPerView: 3 }
+      768: {
+        slidesPerView: 5 // desktop shows 5
+      }
     },
 
     navigation: {
@@ -520,9 +486,8 @@
       prevEl: ".swiper-button-prev",
     },
 
-    /* Use the external pagination container below the gallery */
     pagination: {
-      el: ".mySwiperPagination",
+      el: ".swiper-pagination",
       clickable: true,
     },
   });
