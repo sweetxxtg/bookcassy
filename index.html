@@ -111,13 +111,20 @@
 }
 
 .profile-main-img {
-  width: 100%;              /* take full width */
-  max-width: 500px;         /* optional: limit width on large screens */
+  width: 100%;              /* full width on mobile */
   display: block;
-  margin: 0 auto 16px;
-  border-radius: 0;         /* no rounded corners */
-  height: auto;             /* let height adjust naturally */
-  object-fit: contain;      /* keep full image visible */
+  margin: 0 auto 16px;      /* spacing below image */
+  border-radius: 0;
+  height: auto;             /* natural height */
+  max-height: 90vh;         /* keep it tall but not overflowing screen */
+  object-fit: contain;      /* show entire image, no cropping */
+}
+
+@media (min-width: 768px) {
+  .profile-main-img {
+    max-width: 600px;       /* center and limit width on larger screens */
+    height: auto;           /* still natural height */
+  }
 }
 
 .profile-name {
