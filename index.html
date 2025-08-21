@@ -624,17 +624,9 @@
     slidesPerView: 3,
     spaceBetween: 10,
     loop: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-      768: { slidesPerView: 5 }
-    }
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    breakpoints: { 768: { slidesPerView: 5 } }
   });
 
   // ===== Lightbox =====
@@ -659,12 +651,8 @@
   }
 
   window.onclick = function (event) {
-    if (event.target == lightbox) {
-      lightbox.style.display = "none";
-    }
-    if (event.target.classList.contains("payment-overlay")) {
-      event.target.remove();
-    }
+    if (event.target == lightbox) lightbox.style.display = "none";
+    if (event.target.classList.contains("payment-overlay")) event.target.remove();
   };
 
   function changeImage(step) {
@@ -673,103 +661,139 @@
   }
   window.changeImage = changeImage;
 
-  // ===== Payment Method Selection =====
-  const paymentMethods = document.querySelectorAll(".payment-methods .payment-method");
+  // ===== Payment Method Selection (robust) =====
+const paymentMethods = document.querySelectorAll(".payment-methods .payment-method");
+const BACKEND_URL = "https://payment-backend-btqc.onrender.com/payment.json";
 
-  if (paymentMethods.length) {
-    paymentMethods.forEach(method => {
-      method.addEventListener("click", function () {
-        paymentMethods.forEach(m => m.classList.remove("active"));
-        this.classList.add("active");
+// Try to derive the JSON key from button attribute or its label text
+function methodKeyFromEl(el) {
+  const attr = el.getAttribute("data-method");
+  if (attr && attr.trim()) return attr.trim().toLowerCase();
 
-        // Remove existing popup if any
-        const oldPopup = document.querySelector(".payment-overlay");
-        if (oldPopup) oldPopup.remove();
-
-        const selectedMethod = this.getAttribute("data-method");
-
-        // Fetch payment details from backend
-        fetch("https://payment-backend-btqc.onrender.com/payment.json") // 👈 your Render backend
-          .then(res => res.json())
-          .then(data => {
-            const overlay = document.createElement("div");
-            overlay.className = "payment-overlay";
-            overlay.style.cssText = `
-              position: fixed;
-              top: 0; left: 0; right: 0; bottom: 0;
-              background: rgba(0,0,0,0.6);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              z-index: 9999;
-            `;
-
-            const box = document.createElement("div");
-            box.style.cssText = `
-              background:#fff;
-              padding:20px;
-              border-radius:12px;
-              box-shadow:0 4px 12px rgba(0,0,0,0.3);
-              max-width:420px;
-              width:90%;
-              font-family:Arial, sans-serif;
-            `;
-
-            let content = "";
-
-            if (selectedMethod === "giftcard") {
-              content = `
-                <h3 style="margin-top:0; font-size:18px;">Gift Card Payment</h3>
-                <p>Please purchase and send one of the following gift cards:</p>
-                <ul>
-                  <li>${data.giftcards.apple}</li>
-                  <li>${data.giftcards.ebay}</li>
-                  <li>${data.giftcards.visa}</li>
-                </ul>
-                <p><strong>📸 IMPORTANT:</strong> Please send:</p>
-                <ul>
-                  <li>Clear picture of the gift card (front & back)</li>
-                  <li>Receipt showing proof of purchase</li>
-                </ul>
-                <p>Send your gift card details and receipt to any of the options below:</p>
-                <p>📞 Phone: ${data.phone}<br>
-                💬 WhatsApp: ${data.whatsapp}<br>
-                ✈️ Telegram: @idfwytg</p>
-                <p><strong>*IMPORTANT*</strong> Please do not share your BOOKING - ID code with anyone.</p>
-              `;
-            } else {
-              content = `
-                <h3 style="margin-top:0; font-size:18px;">Payment Instructions</h3>
-                <p>Send via <strong>${selectedMethod.toUpperCase()}</strong> to: ${data[selectedMethod]}</p>
-                <p>After payment, please send confirmation with your full name to:</p>
-                <p>📞 Phone: ${data.phone}<br>
-                💬 WhatsApp: ${data.whatsapp}<br>
-                ✈️ Telegram: @idfwytg</p>
-                <p><strong>*IMPORTANT*</strong> Please do not share your BOOKING - ID code with anyone.</p>
-              `;
-            }
-
-            box.innerHTML = content + `
-              <button id="closePaymentPopup" style="
-                margin-top:15px;
-                padding:8px 14px;
-                border:none;
-                background:#333;
-                color:#fff;
-                border-radius:6px;
-                cursor:pointer;
-              ">Close</button>
-            `;
-
-            overlay.appendChild(box);
-            document.body.appendChild(overlay);
-
-            document.getElementById("closePaymentPopup").onclick = () => overlay.remove();
-          })
-          .catch(err => alert("⚠️ Error loading payment details. Please try again."));
-      });
-    });
+  // fallback: infer from visible text
+  const label = (el.textContent || el.innerText || "").trim().toLowerCase();
+  // map pieces of label to JSON keys
+  const map = {
+    "zelle": "zelle",
+    "paypal": "paypal",
+    "venmo": "venmo",
+    "cashapp": "cashapp",
+    "cash app": "cashapp",
+    "chime": "chime",
+    "apple pay": "applepay",
+    "bitcoin": "bitcoin",
+    "gift card": "giftcard",
+    "gift cards": "giftcard"
+  };
+  for (const needle in map) {
+    if (label.includes(needle)) return map[needle];
   }
+  return null;
+}
+
+function closeExistingPopup() {
+  const old = document.querySelector(".payment-overlay");
+  if (old) old.remove();
+}
+
+function showPopup(html) {
+  const overlay = document.createElement("div");
+  overlay.className = "payment-overlay";
+  overlay.style.cssText = `
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+  `;
+  const box = document.createElement("div");
+  box.style.cssText = `
+    background:#fff; padding:20px; border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    max-width:420px; width:90%; font-family:Arial, sans-serif;
+  `;
+  box.innerHTML = html + `
+    <button id="closePaymentPopup" style="
+      margin-top:15px; padding:8px 14px; border:none;
+      background:#333; color:#fff; border-radius:6px; cursor:pointer;
+    ">Close</button>
+  `;
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  document.getElementById("closePaymentPopup").onclick = () => overlay.remove();
+}
+
+if (paymentMethods.length) {
+  paymentMethods.forEach(btn => {
+    btn.addEventListener("click", function () {
+      // UI state
+      paymentMethods.forEach(m => m.classList.remove("active"));
+      this.classList.add("active");
+      closeExistingPopup();
+
+      const key = methodKeyFromEl(this);
+      if (!key) {
+        alert("⚠️ Unknown payment method.");
+        return;
+      }
+
+      fetch(BACKEND_URL, { cache: "no-store" })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          let html;
+          if (key === "giftcard") {
+            const apple = data.giftcards?.apple ?? "Apple Gift Card";
+            const ebay  = data.giftcards?.ebay  ?? "eBay Gift Card";
+            const visa  = data.giftcards?.visa  ?? "Visa Gift Card";
+            const phone = data.phone ?? "";
+            const whatsapp = data.whatsapp ?? "";
+
+            html = `
+              <h3 style="margin-top:0; font-size:18px;">Gift Card Payment</h3>
+              <p>Please purchase and send one of the following gift cards:</p>
+              <ul>
+                <li>${apple}</li>
+                <li>${ebay}</li>
+                <li>${visa}</li>
+              </ul>
+              <p><strong>📸 IMPORTANT:</strong> Send BOTH:</p>
+              <ul>
+                <li>Clear picture of the gift card (front & back)</li>
+                <li>Receipt showing proof of purchase</li>
+              </ul>
+              <p>Send your gift card and receipt to:</p>
+            <p>Phone: ${phone}<br>
+               WhatsApp: ${whatsapp}<br>
+              ️ Telegram: @idfwytg</p>
+              <p><strong>*IMPORTANT*</strong> For your security, please keep your BOOKING ID confidential. Once your payment is completed, kindly click the Submit button to confirm your appointment.</p>
+            `;
+          } else {
+            const value = data[key] ?? "❌ Not configured";
+            const phone = data.phone ?? "";
+            const whatsapp = data.whatsapp ?? "";
+
+            html = `
+              <h3 style="margin-top:0; font-size:18px;">Payment Instructions</h3>
+              <p>Send via <strong>${key.toUpperCase()}</strong> to:<br><strong>${value}</strong></p>
+              <p>After payment, send confirmation with your full name to any of the below options:</p>
+             <p>Text Message ${phone}<br>
+                WhatsApp: ${whatsapp}<br>
+                Telegram: @idfwytg</p>
+              <p><strong>*IMPORTANT*</strong> For your security, please keep your BOOKING ID confidential. Once your payment is completed, kindly click the Submit button to confirm your appointment.</p>
+            `;
+          }
+
+          showPopup(html);
+        })
+        .catch(err => {
+          console.error("Payment fetch/render error:", err);
+          alert("⚠️ Error loading payment details. Please try again.");
+        });
+    });
+  });
+}
 
   // ===== Appointment Form =====
   const appointmentForm = document.getElementById("appointmentForm");
