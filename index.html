@@ -253,7 +253,8 @@
   margin-right: 10px;
 }
 
-    .mySwiper {
+    /* Swiper Base */
+.mySwiper {
   width: 100%;
   margin: 0 auto;
 }
@@ -261,18 +262,20 @@
 .mySwiper .swiper-slide img {
   width: 100%;
   height: auto;
-  object-fit: contain; /* keeps full image visible */
+  object-fit: contain;
+  border-radius: 0;   /* no radius */
+  cursor: pointer;
 }
 
-/* arrows */
+/* Arrows */
 .swiper-button-prev,
 .swiper-button-next {
-  color: gray;
-  width: 24px;
-  height: 24px;
+  color: white !important;
+  width: 22px !important;
+  height: 22px !important;
 }
 
-/* move dots BELOW images */
+/* Pagination Dots */
 .swiper-pagination {
   position: relative !important;
   margin-top: 10px;
@@ -308,6 +311,7 @@
   font-weight: bold;
   cursor: pointer;
 }
+
 
     /* ABOUT */
     .about {
@@ -430,20 +434,18 @@
     <div class="swiper-slide"><img src="https://pbs.twimg.com/media/GKrq_slWYAAfIIh.jpg:large"></div>
     <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Eyq4GxxU8Ag-sGc.jpg:large"></div>
   </div>
-
-  <!-- arrows -->
-  <div class="swiper-button-prev"></div>
+  <!-- Navigation -->
   <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <!-- Pagination -->
+  <div class="swiper-pagination"></div>
 </div>
-
-<!-- dots go BELOW swiper -->
-<div class="swiper-pagination"></div>
 
 <!-- Lightbox Modal -->
 <div id="lightbox" class="lightbox">
-    <span class="close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
-  </div>
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img">
+</div>
 
     <!-- About -->
     <div class="about">
@@ -543,6 +545,6 @@ window.onclick = function(event) {
     lightbox.style.display = "none";
   }
 }
-  </script>
+</script>
 </body>
 </html>
