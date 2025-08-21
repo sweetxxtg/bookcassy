@@ -377,14 +377,49 @@
       footer img { margin-bottom: 6px; }
     }
 	
-	#appointment { padding: 20px; max-width: 700px; margin: auto; }
-  .title { font-size: 1.8em; margin-bottom: 15px; text-align:center; }
-  .subtitle { margin-top: 20px; font-size: 1.2em; }
-  .hint { font-size: 0.9em; color: #555; }
+	#appointment {
+  padding: 20px;
+  max-width: 700px;
+  margin: auto;
+}
 
-  .form-group { margin-bottom: 15px; }
-  .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
-  .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+.title {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.hint {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: center; /* centers inputs inside */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-align: left;   /* still left aligned */
+  padding-left: 21px;  /* 👈 moves label right slightly */
+}
+.form-group input {
+  width: 100%;             /* 👈 cut down from 100% */
+  max-width: 660px;       /* 👈 keeps inputs from being too wide */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
 
   .rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
   .rate-option { padding: 15px; background: #f4f4f4; text-align: center; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
