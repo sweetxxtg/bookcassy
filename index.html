@@ -16,12 +16,6 @@
       font-family: 'Nunito', sans-serif;
       background: #fff;
     }
-	
-	/* Lock scroll only on landing page */
-body.locked {
-  overflow: hidden;
-  height: 100vh;
-}
 
     /* HEADER */
     header {
@@ -55,38 +49,30 @@ body.locked {
       padding: 6px 10px;
       cursor: pointer;
     }
-	
-	/* Landing wrapper full screen (without footer) */
-.landing-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
 
-    /* Hero takes available space */
-.hero {
-  flex: 1;
-  background: url('https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large') no-repeat center center/cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  position: relative;
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.55);
-}
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 92%;
-}
-
+    /* HERO */
+    .hero {
+      background: url('https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large') no-repeat center center/cover;
+      height: calc(100vh - 65px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 92%;
+    }
     .hero h1 {
       font-size: clamp(22px, 5vw, 32px);
       margin-bottom: 8px;
@@ -267,8 +253,7 @@ body.locked {
   margin-right: 10px;
 }
 
-    /* Swiper Base */
-.mySwiper {
+    .mySwiper {
   width: 100%;
   margin: 0 auto;
 }
@@ -276,54 +261,22 @@ body.locked {
 .mySwiper .swiper-slide img {
   width: 100%;
   height: auto;
-  object-fit: contain;
-  border-radius: 0;   /* no radius */
-  cursor: pointer;
+  object-fit: contain; /* keeps full image visible */
 }
 
-/* Arrows */
+/* arrows */
 .swiper-button-prev,
 .swiper-button-next {
-  color: white !important;
-  width: 22px !important;
-  height: 22px !important;
+  color: gray;
+  width: 24px;
+  height: 24px;
 }
 
-/* Pagination Dots */
+/* move dots BELOW images */
 .swiper-pagination {
   position: relative !important;
   margin-top: 10px;
   text-align: center;
-}
-
-/* Lightbox */
-.lightbox {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.9);
-}
-
-.lightbox-content {
-  margin: auto;
-  display: block;
-  max-width: 95%;
-  max-height: 90%;
-}
-
-.close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 
@@ -334,30 +287,30 @@ body.locked {
       line-height: 1.5;
     }
 
-    /* Global footer always visible */
-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 12px;
-  font-size: 12px;
-  background: #000;
-  color: #aaa;
-  flex-wrap: wrap;
-}
-footer img {
-  width: 140px;
-  height: auto;
-}
-footer div {
-  margin: 2px 0;
-}
+    /* FOOTER */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 12px;
+      font-size: 12px;
+      background: #000;
+      color: #aaa;
+      flex-wrap: wrap;
+    }
+    footer img {
+      width: 140px;
+      height: auto;
+    }
+    footer div {
+      margin: 2px 0;
+    }
 
-@media (max-width: 480px) {
-  .btn { width: 90%; }
-  footer { flex-direction: column; text-align: center; }
-  footer img { margin-bottom: 6px; }
-}
+    @media (max-width: 480px) {
+      .btn { width: 90%; }
+      footer { flex-direction: column; text-align: center; }
+      footer img { margin-bottom: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -369,8 +322,7 @@ footer div {
   </header>
 
   <!-- Landing -->
-<div class="landing-wrapper" id="landing">
-  <section class="hero">
+  <section class="hero" id="landing">
     <div class="hero-content">
       <h1>Cassy Jacquelyn</h1>
       <p>Here to Turn your fantasies to reality 💋</p>
@@ -378,15 +330,6 @@ footer div {
       <button class="btn">Book an Appointment</button>
     </div>
   </section>
-</div>
-
-<!-- Global Footer -->
-<footer>
-  <div>© 2025 Pay4Booking</div>
-  <img src="https://www.pay4booking.com/wp-content/uploads/2025/05/pay4booking-logo.png" alt="Logo">
-  <div>All Rights Reserved</div>
-</footer>
-</div>
 
   <!-- Profile -->
 <section class="profile-page" id="profile">
@@ -458,18 +401,14 @@ footer div {
     <div class="swiper-slide"><img src="https://pbs.twimg.com/media/GKrq_slWYAAfIIh.jpg:large"></div>
     <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Eyq4GxxU8Ag-sGc.jpg:large"></div>
   </div>
-  <!-- Navigation -->
-  <div class="swiper-button-next"></div>
+
+  <!-- arrows -->
   <div class="swiper-button-prev"></div>
-  <!-- Pagination -->
-  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
 </div>
 
-<!-- Lightbox Modal -->
-<div id="lightbox" class="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-content" id="lightbox-img">
-</div>
+<!-- dots go BELOW swiper -->
+<div class="swiper-pagination"></div>
 
     <!-- About -->
     <div class="about">
@@ -526,58 +465,32 @@ footer div {
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-  // lock scroll on load
-  document.body.classList.add("locked");
-});
-
-function showProfile() {
-  // hide landing
-  document.getElementById("landing").style.display = "none";
-  // show profile page
-  document.querySelector(".profile-page").classList.add("active");
-  // enable scroll
-  document.body.classList.remove("locked");
-}
+    function showProfile() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("profile").classList.add("active");
+    }
 
     var swiper = new Swiper(".mySwiper", {
-  slidesPerView: 3,
-  spaceBetween: 10,
-  loop: true,
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  breakpoints: {
-    768: { slidesPerView: 5 }
-  }
-});
+    loop: true,
+    spaceBetween: 10,
+    slidesPerView: 3,   // mobile shows 3
 
-// Lightbox
-var lightbox = document.getElementById("lightbox");
-var lightboxImg = document.getElementById("lightbox-img");
-var closeBtn = document.getElementsByClassName("close")[0];
+    breakpoints: {
+      768: {
+        slidesPerView: 5 // desktop shows 5
+      }
+    },
 
-document.querySelectorAll(".swiper-image").forEach(img => {
-  img.onclick = function() {
-    lightbox.style.display = "block";
-    lightboxImg.src = this.src;
-  }
-});
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
 
-closeBtn.onclick = function() {
-  lightbox.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (event.target == lightbox) {
-    lightbox.style.display = "none";
-  }
-}
-</script>
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+  </script>
 </body>
 </html>
