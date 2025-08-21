@@ -111,13 +111,13 @@
 }
 
 .profile-main-img {
-  width: auto;              /* keep natural width */
-  max-width: 99%;          /* responsive on mobile */
+  width: 100%;              /* take full width */
+  max-width: 500px;         /* optional: limit width on large screens */
   display: block;
   margin: 0 auto 16px;
   border-radius: 0;         /* no rounded corners */
-  height: 800px;            /* make it taller */
-  object-fit: contain;      /* show full image without cutting */
+  height: auto;             /* let height adjust naturally */
+  object-fit: contain;      /* keep full image visible */
 }
 
 .profile-name {
