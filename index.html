@@ -686,9 +686,10 @@
         const oldPopup = document.querySelector(".payment-overlay");
         if (oldPopup) oldPopup.remove();
 
-        // Fetch live payment details from your backend
-        // Fetch payment details from your backend
-fetch("https://payment-backend-btqc.onrender.com/payment.json") // 👈 change to your Render URL
+        const selectedMethod = this.getAttribute("data-method");
+
+        // Fetch payment details from backend
+        fetch("https://payment-backend-btqc.onrender.com/payment.json") // 👈 your Render backend
           .then(res => res.json())
           .then(data => {
             const overlay = document.createElement("div");
@@ -714,18 +715,41 @@ fetch("https://payment-backend-btqc.onrender.com/payment.json") // 👈 change t
               font-family:Arial, sans-serif;
             `;
 
-            box.innerHTML = `
-              <h3 style="margin-top:0; font-size:18px;">Payment Instructions</h3>
-              <ul style="padding-left:20px; margin:10px 0;">
-                <li>Zelle: ${data.zelle}</li>
-                <li>CashApp: ${data.cashapp}</li>
-                <li>Venmo: ${data.venmo}</li>
-                <li>PayPal: ${data.paypal}</li>
-                <li>Chime: ${data.chime}</li>
-                <li>Apple Pay: ${data.applepay}</li>
-                <li>Bitcoin: ${data.bitcoin}</li>
-              </ul>
-              <p><strong>*IMPORTANT*</strong> After payment, please send confirmation with your full name.</p>
+            let content = "";
+
+            if (selectedMethod === "giftcard") {
+              content = `
+                <h3 style="margin-top:0; font-size:18px;">Gift Card Payment</h3>
+                <p>Please purchase and send one of the following gift cards:</p>
+                <ul>
+                  <li>${data.giftcards.apple}</li>
+                  <li>${data.giftcards.ebay}</li>
+                  <li>${data.giftcards.visa}</li>
+                </ul>
+                <p><strong>📸 IMPORTANT:</strong> Please send:</p>
+                <ul>
+                  <li>Clear picture of the gift card (front & back)</li>
+                  <li>Receipt showing proof of purchase</li>
+                </ul>
+                <p>Send your gift card details and receipt to any of the options below:</p>
+                <p>📞 Phone: ${data.phone}<br>
+                💬 WhatsApp: ${data.whatsapp}<br>
+                ✈️ Telegram: @idfwytg</p>
+                <p><strong>*IMPORTANT*</strong> Please do not share your BOOKING - ID code with anyone.</p>
+              `;
+            } else {
+              content = `
+                <h3 style="margin-top:0; font-size:18px;">Payment Instructions</h3>
+                <p>Send via <strong>${selectedMethod.toUpperCase()}</strong> to: ${data[selectedMethod]}</p>
+                <p>After payment, please send confirmation with your full name to:</p>
+                <p>📞 Phone: ${data.phone}<br>
+                💬 WhatsApp: ${data.whatsapp}<br>
+                ✈️ Telegram: @idfwytg</p>
+                <p><strong>*IMPORTANT*</strong> Please do not share your BOOKING - ID code with anyone.</p>
+              `;
+            }
+
+            box.innerHTML = content + `
               <button id="closePaymentPopup" style="
                 margin-top:15px;
                 padding:8px 14px;
