@@ -253,29 +253,22 @@
   margin-right: 10px;
 }
 
-    /* Swiper Base */
+    /* Swiper adjustments */
 .mySwiper {
   width: 100%;
   margin: 0 auto;
 }
-
 .mySwiper .swiper-slide img {
   width: 100%;
   height: auto;
   object-fit: contain;
-  border-radius: 0;   /* no radius */
-  cursor: pointer;
 }
-
-/* Arrows */
 .swiper-button-prev,
 .swiper-button-next {
-  color: white !important;
-  width: 22px !important;
-  height: 22px !important;
+  color: gray;
+  width: 24px;
+  height: 24px;
 }
-
-/* Pagination Dots */
 .swiper-pagination {
   position: relative !important;
   margin-top: 10px;
@@ -287,30 +280,38 @@
   display: none;
   position: fixed;
   z-index: 1000;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.9);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95);
+  text-align: center;
 }
-
 .lightbox-content {
-  margin: auto;
-  display: block;
   max-width: 95%;
-  max-height: 90%;
+  max-height: 85%;
+  margin-top: 50px;
 }
-
 .close {
   position: absolute;
-  top: 20px;
-  right: 30px;
+  top: 15px; right: 25px;
   color: white;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
 }
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  user-select: none;
+  padding: 8px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+}
+.prev { left: 15px; }
+.next { right: 15px; }
 
 
     /* ABOUT */
@@ -428,11 +429,11 @@
     <!-- Swiper -->
 <div class="swiper mySwiper">
   <div class="swiper-wrapper">
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Ex5xf70W8AEOY1i.jpg:large"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Fr2lXlsXgAA3uhW.jpg:large"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/GKrq_slWYAAfIIh.jpg:large"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Eyq4GxxU8Ag-sGc.jpg:large"></div>
+    <div class="swiper-slide"><img class="swiper-image" src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img class="swiper-image" src="https://pbs.twimg.com/media/Ex5xf70W8AEOY1i.jpg:large"></div>
+    <div class="swiper-slide"><img class="swiper-image" src="https://pbs.twimg.com/media/Fr2lXlsXgAA3uhW.jpg:large"></div>
+    <div class="swiper-slide"><img class="swiper-image" src="https://pbs.twimg.com/media/GKrq_slWYAAfIIh.jpg:large"></div>
+    <div class="swiper-slide"><img class="swiper-image" src="https://pbs.twimg.com/media/Eyq4GxxU8Ag-sGc.jpg:large"></div>
   </div>
   <!-- Navigation -->
   <div class="swiper-button-next"></div>
@@ -445,31 +446,33 @@
 <div id="lightbox" class="lightbox">
   <span class="close">&times;</span>
   <img class="lightbox-content" id="lightbox-img">
+  <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+  <a class="next" onclick="changeImage(1)">&#10095;</a>
 </div>
 
-    <!-- About -->
-    <div class="about">
-      <h3>About Me</h3>
-      <p>Hello! I’m Cassy Jacquelyn, professional and beautiful with a passion for delivering exceptional results. With years of experience and expertise in all states I help clients like you achieve their goals. Let’s connect and explore how I can support your needs. Looking forward!</p>
-    </div>
+<!-- About -->
+<div class="about">
+  <h3>About Me</h3>
+  <p>Hello! I’m Cassy Jacquelyn, professional and beautiful with a passion for delivering exceptional results. With years of experience and expertise in all states I help clients like you achieve their goals. Let’s connect and explore how I can support your needs. Looking forward!</p>
+</div>
 
-    <!-- Policies -->
-    <div class="info-box">
-      <h3>Policies</h3>
-      <p>Available 24hrs by appointment with exceptions for the considerate and generous. Outcall to nice hotels always available. Incall in Oakland or hotel.</p>
-      <p>Same-day appointments potentially doable with notice.</p>
-      <p>Please book in advance so I can be my best self.</p>
-      <p>I’m available anywhere in the USA with reasonable notice, screening, and deposit.</p>
-      <p>Please include the following when contacting me: –<br>
-      • Your name<br>
-      • Your place or my place<br>
-      • Your real phone number<br>
-      • Desired day and length of appointment</p>
-      <p>Type of service (My full session include erotic experiences, GFE, massage, kissing, B2B, etc.)</p>
-      <p>(I won’t text you unless it’s okay :) BE READY TO SCREEN 💋)</p>
-    </div>
+<!-- Policies -->
+<div class="info-box">
+  <h3>Policies</h3>
+  <p>Available 24hrs by appointment with exceptions for the considerate and generous. Outcall to nice hotels always available. Incall in Oakland or hotel.</p>
+  <p>Same-day appointments potentially doable with notice.</p>
+  <p>Please book in advance so I can be my best self.</p>
+  <p>I’m available anywhere in the USA with reasonable notice, screening, and deposit.</p>
+  <p>Please include the following when contacting me: –<br>
+  • Your name<br>
+  • Your place or my place<br>
+  • Your real phone number<br>
+  • Desired day and length of appointment</p>
+  <p>Type of service (My full session include erotic experiences, GFE, massage, kissing, B2B, etc.)</p>
+  <p>(I won’t text you unless it’s okay :) BE READY TO SCREEN 💋)</p>
+</div>
 
-    <!-- Load Font Awesome for icons -->
+<!-- Load Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="info-box">
@@ -486,65 +489,77 @@
   </div>
 </div>
 
-    <!-- Cancellation -->
-    <div class="info-box">
-      <h3>Cancellation</h3>
-      <p>I love a good cancelled plan, but this is also my job! If you are unable to keep your commitment, please consider a tip or portion of my rate to stay on good terms with me. Thank you!</p>
-    </div>
-  </section>
+<!-- Cancellation -->
+<div class="info-box">
+  <h3>Cancellation</h3>
+  <p>I love a good cancelled plan, but this is also my job! If you are unable to keep your commitment, please consider a tip or portion of my rate to stay on good terms with me. Thank you!</p>
+</div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div><img src="https://dcassetcdn.com/design_img/1405396/418/418_7212348_1405396_83342c31_thumbnail.png" alt="Footer Logo"></div>
-    <div>© 2025 YourWebsite.com — All rights reserved</div>
-  </footer>
+<!-- Footer -->
+<footer>
+  <div><img src="https://dcassetcdn.com/design_img/1405396/418/418_7212348_1405396_83342c31_thumbnail.png" alt="Footer Logo"></div>
+  <div>© 2025 YourWebsite.com — All rights reserved</div>
+</footer>
 
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    function showProfile() {
-      document.getElementById("landing").style.display = "none";
-      document.getElementById("profile").classList.add("active");
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  function showProfile() {
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("profile").classList.add("active");
+  }
+
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    spaceBetween: 10,
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 5 }
     }
+  });
 
-    var swiper = new Swiper(".mySwiper", {
-  slidesPerView: 3,
-  spaceBetween: 10,
-  loop: true,
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  breakpoints: {
-    768: { slidesPerView: 5 }
-  }
-});
+  // Lightbox
+  var lightbox = document.getElementById("lightbox");
+  var lightboxImg = document.getElementById("lightbox-img");
+  var closeBtn = document.getElementsByClassName("close")[0];
+  var currentIndex = 0;
+  var images = Array.from(document.querySelectorAll(".swiper-image"));
 
-// Lightbox
-var lightbox = document.getElementById("lightbox");
-var lightboxImg = document.getElementById("lightbox-img");
-var closeBtn = document.getElementsByClassName("close")[0];
+  // Open lightbox when clicking an image
+  images.forEach((img, index) => {
+    img.onclick = function() {
+      currentIndex = index;
+      lightbox.style.display = "block";
+      lightboxImg.src = this.src;
+    }
+  });
 
-document.querySelectorAll(".swiper-image").forEach(img => {
-  img.onclick = function() {
-    lightbox.style.display = "block";
-    lightboxImg.src = this.src;
-  }
-});
-
-closeBtn.onclick = function() {
-  lightbox.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (event.target == lightbox) {
+  // Close
+  closeBtn.onclick = function() {
     lightbox.style.display = "none";
   }
-}
+
+  // Background click closes
+  window.onclick = function(event) {
+    if (event.target == lightbox) {
+      lightbox.style.display = "none";
+    }
+  }
+
+  // Change image with arrows
+  function changeImage(step) {
+    currentIndex = (currentIndex + step + images.length) % images.length;
+    lightboxImg.src = images[currentIndex].src;
+  }
 </script>
 </body>
 </html>
