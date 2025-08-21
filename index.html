@@ -111,12 +111,13 @@
 }
 
 .profile-main-img {
-  width: 70%;              /* full width */
-  max-width: 70%;          /* remove restriction */
+  width: auto;              /* keep natural width */
+  max-width: 99%;          /* responsive on mobile */
   display: block;
   margin: 0 auto 16px;
-  border-radius: 0;         /* remove rounded corners */
-  height: auto;             /* keep aspect ratio */
+  border-radius: 0;         /* no rounded corners */
+  height: 800px;            /* make it taller */
+  object-fit: contain;      /* show full image without cutting */
 }
 
 .profile-name {
@@ -313,8 +314,11 @@
   </section>
 
   <!-- Profile -->
-  <section class="profile-page" id="profile">
-    <img src="https://pbs.twimg.com/media/F_qq3PwbIAAmtRe.jpg:large" class="profile-main-img" alt="Profile">
+<section class="profile-page" id="profile">
+  <img src="https://pbs.twimg.com/media/F_qq3PwbIAAmtRe.jpg:large" class="profile-main-img" alt="Profile">
+
+  <h2 class="profile-name">Connie Claire</h2>
+  <p class="profile-location">United States</p>
 
     <div class="long-divider"></div>
 
