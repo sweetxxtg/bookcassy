@@ -409,7 +409,7 @@
   margin-bottom: 5px;
   font-weight: 600;
   text-align: left;   /* still left aligned */
-  padding-left: 8px;  /* 👈 moves label right slightly */
+  padding-left: 6px;  /* 👈 moves label right slightly */
 }
 .form-group input {
   width: 100%;             /* 👈 cut down from 100% */
@@ -683,23 +683,26 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   // ===== Show Sections =====
-  function showProfile() {
-    document.getElementById("landing").style.display = "none";
-    document.getElementById("profile").classList.add("active");
-    document.getElementById("appointment").style.display = "none";
-  }
-
-  function showAppointment() {
-    document.getElementById("landing").style.display = "none";
-    document.getElementById("profile").classList.remove("active");
-    document.getElementById("appointment").style.display = "block";
-  }
-
   function goHome() {
-    document.getElementById("landing").style.display = "block";
-    document.getElementById("profile").classList.remove("active");
-    document.getElementById("appointment").style.display = "none";
-  }
+  document.getElementById("landing").style.display = "block";
+  document.getElementById("profile").classList.remove("active");
+  document.getElementById("appointment").style.display = "none";
+  localStorage.setItem("currentPage", "home"); // 👈 save current page
+}
+
+function showProfile() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("profile").classList.add("active");
+  document.getElementById("appointment").style.display = "none";
+  localStorage.setItem("currentPage", "profile"); // 👈 save
+}
+
+function showAppointment() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("profile").classList.remove("active");
+  document.getElementById("appointment").style.display = "block";
+  localStorage.setItem("currentPage", "appointment"); // 👈 save
+}
 
   // ===== Toggle Menu (☰ ↔ ✖) =====
   function toggleMenu() {
@@ -949,6 +952,18 @@ if (paymentMethods.length) {
       window.scrollTo({ top: paymentSection.offsetTop, behavior: "smooth" });
     }
   });
+  
+  // Restore last section on reload
+window.addEventListener("load", () => {
+  const currentPage = localStorage.getItem("currentPage");
+  if (currentPage === "profile") {
+    showProfile();
+  } else if (currentPage === "appointment") {
+    showAppointment();
+  } else {
+    goHome(); // default to home
+  }
+});
 </script>
 </body>
 </html>
