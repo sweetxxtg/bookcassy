@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      background: #fff;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: #fff;
+      position: relative;
+      z-index: 10;
+    }
+    header::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: #ddd;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    .logo img {
+      height: 56px;
+      max-width: 100%;
+    }
+    .menu-btn {
+      font-size: 26px;
+      background: #f4f4f4;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      background: url('https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large') no-repeat center center/cover;
+      height: calc(100vh - 65px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 92%;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 5vw, 32px);
+      margin-bottom: 8px;
+    }
+    .hero p {
+      font-size: clamp(14px, 4vw, 18px);
+      margin-bottom: 22px;
+    }
+    .btn {
+      display: block;
+      width: 80%;
+      max-width: 220px;
+      padding: 14px;
+      margin: 10px auto;
+      background: #ff4b4b;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #e63e3e;
+    }
+
+    /* PROFILE */
+    .profile-page {
+      display: none;
+      padding: 14px;
+    }
+    .profile-page.active {
+      display: block;
+    }
+    .profile-main-img {
+      width: 70%;
+      max-width: 260px;
+      display: block;
+      margin: 0 auto 14px;
+      border-radius: 6px;
+    }
+
+    .long-divider {
+      border-bottom: 1px solid #ccc;
+      margin: 16px auto;
+    }
+
+    .profile-details {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .divider {
+      border-bottom: 1px solid #ccc;
+      margin: 16px 0;
+    }
+
+    /* Card box */
+.card {
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+/* Contact buttons */
+.contact-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.contact-btn {
+  display: block;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Views section */
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Availability */
+.availability p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.availability hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 6px 0;
+}
+
+    /* INFO BOXES */
+    .info-box {
+      background: #f7f7f7;
+      padding: 14px;
+      margin: 14px 0;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .info-box h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.payment-method i {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+    /* SWIPER */
+    .swiper {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+    }
+    .swiper-slide img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 8px;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #000;
+    }
+    .swiper-pagination-bullet {
+      background: #000;
+    }
+
+    /* ABOUT */
+    .about {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 12px;
+      font-size: 12px;
+      background: #000;
+      color: #aaa;
+      flex-wrap: wrap;
+    }
+    footer img {
+      width: 140px;
+      height: auto;
+    }
+    footer div {
+      margin: 2px 0;
+    }
+
+    @media (max-width: 480px) {
+      .btn { width: 90%; }
+      footer { flex-direction: column; text-align: center; }
+      footer img { margin-bottom: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://www.pay4booking.com/wp-content/uploads/2025/05/pay4booking-logo.png" alt="Logo">
+    </div>
+    <button class="menu-btn">☰</button>
+  </header>
+
+  <!-- Landing -->
+  <section class="hero" id="landing">
+    <div class="hero-content">
+      <h1>Cassy Jacquelyn</h1>
+      <p>Here to Turn your fantasies to reality 💋</p>
+      <button class="btn" onclick="showProfile()">My Profile</button>
+      <button class="btn">Book an Appointment</button>
+    </div>
+  </section>
+
+  <!-- Profile -->
+  <section class="profile-page" id="profile">
+    <img src="https://pbs.twimg.com/media/F_qq3PwbIAAmtRe.jpg:large" class="profile-main-img" alt="Profile">
+
+    <div class="long-divider"></div>
+
+    <div class="profile-details">
+      <p><strong>Gender:</strong> Female</p>
+      <p><strong>Age:</strong> 26</p>
+      <p><strong>Height:</strong> 5.8</p>
+      <p><strong>Hair:</strong> Dark</p>
+      <p><strong>Eyes:</strong> Brown</p>
+      <p><strong>Bust:</strong> Cup</p>
+      <p><strong>Ethnicity:</strong> White</p>
+      <p><strong>Caters to:</strong> Men</p>
+      <p><strong>Location:</strong> United States</p>
+      <p><strong>Availability:</strong> Contact me to know more details!</p>
+    </div>
+
+    <!-- CONTACT -->
+<div class="card">
+  <h2>Contact</h2>
+  <div class="contact-buttons">
+    <a href="tel:+14082868278" class="contact-btn">+1 (408) 286 8278</a>
+    <a href="mailto:connieclaire56@gmail.com" class="contact-btn">connieclaire56@gmail.com</a>
+  </div>
+</div>
+
+<!-- VIEWS -->
+<div class="card">
+  <h2>Views</h2>
+  <p><span class="dot"></span> Last Active Today</p>
+  <p>🏠 United States</p>
+  <p>👩 Female</p>
+</div>
+
+<!-- AVAILABILITY -->
+<div class="card">
+  <h2>Availability</h2>
+  <div class="availability">
+    <p><strong>Sunday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Saturday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Monday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Tuesday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Wednesday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Thursday</strong><br>All Day</p>
+    <hr>
+    <p><strong>Friday</strong><br>All Day</p>
+  </div>
+</div>
+
+    <div class="divider"></div>
+
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+        <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- About -->
+    <div class="about">
+      <h3>About Me</h3>
+      <p>Hello! I’m Cassy Jacquelyn, professional and beautiful with a passion for delivering exceptional results. With years of experience and expertise in all states I help clients like you achieve their goals. Let’s connect and explore how I can support your needs. Looking forward!</p>
+    </div>
+
+    <!-- Policies -->
+    <div class="info-box">
+      <h3>Policies</h3>
+      <p>Available 24hrs by appointment with exceptions for the considerate and generous. Outcall to nice hotels always available. Incall in Oakland or hotel.</p>
+      <p>Same-day appointments potentially doable with notice.</p>
+      <p>Please book in advance so I can be my best self.</p>
+      <p>I’m available anywhere in the USA with reasonable notice, screening, and deposit.</p>
+      <p>Please include the following when contacting me: –<br>
+      • Your name<br>
+      • Your place or my place<br>
+      • Your real phone number<br>
+      • Desired day and length of appointment</p>
+      <p>Type of service (My full session include erotic experiences, GFE, massage, kissing, B2B, etc.)</p>
+      <p>(I won’t text you unless it’s okay :) BE READY TO SCREEN 💋)</p>
+    </div>
+
+    <!-- Load Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="info-box">
+  <h3>Payment Method</h3>
+  <div class="payment-methods">
+    <div class="payment-method"><i class="fas fa-bolt"></i> Zelle</div>
+    <div class="payment-method"><i class="fab fa-paypal"></i> Paypal</div>
+    <div class="payment-method"><i class="fab fa-vimeo-v"></i> Venmo</div>
+    <div class="payment-method"><i class="fas fa-dollar-sign"></i> Cashapp</div>
+    <div class="payment-method"><i class="fas fa-credit-card"></i> Chime</div>
+    <div class="payment-method"><i class="fab fa-apple-pay"></i> Apple Pay</div>
+    <div class="payment-method"><i class="fas fa-gift"></i> Gift Cards</div>
+    <div class="payment-method"><i class="fab fa-bitcoin"></i> Bitcoins</div>
+  </div>
+</div>
+
+    <!-- Cancellation -->
+    <div class="info-box">
+      <h3>Cancellation</h3>
+      <p>I love a good cancelled plan, but this is also my job! If you are unable to keep your commitment, please consider a tip or portion of my rate to stay on good terms with me. Thank you!</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div><img src="https://dcassetcdn.com/design_img/1405396/418/418_7212348_1405396_83342c31_thumbnail.png" alt="Footer Logo"></div>
+    <div>© 2025 YourWebsite.com — All rights reserved</div>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    function showProfile() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("profile").classList.add("active");
+    }
+
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      }
+    });
+  </script>
+</body>
+</html>
