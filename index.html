@@ -42,13 +42,44 @@
       max-width: 100%;
     }
     .menu-btn {
-      font-size: 26px;
-      background: #f4f4f4;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      cursor: pointer;
-    }
+  font-size: 26px;
+  background: #f4f4f4;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* Dropdown menu styling */
+.menu {
+  position: absolute;
+  top: 60px; /* below header */
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #f5c7c7;
+  text-align: center;
+  padding: 20px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin: 15px 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
 
     /* HERO */
     .hero {
@@ -376,11 +407,21 @@
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="https://www.pay4booking.com/wp-content/uploads/2025/05/pay4booking-logo.png" alt="Logo">
-    </div>
-    <button class="menu-btn">☰</button>
-  </header>
+  <div class="logo">
+    <img src="https://www.pay4booking.com/wp-content/uploads/2025/05/pay4booking-logo.png" alt="Logo">
+  </div>
+  <!-- Single button only -->
+  <button id="menuBtn" class="menu-btn" onclick="toggleMenu()">☰</button>
+</header>
+
+<!-- Dropdown Menu -->
+<nav class="menu" id="menu" style="display:none;">
+  <ul>
+    <li><a href="#" onclick="goHome(); toggleMenu();">Home</a></li>
+    <li><a href="#" onclick="showProfile(); toggleMenu();">My profile</a></li>
+    <li><a href="#" onclick="showAppointment(); toggleMenu();">Book an appointment</a></li>
+  </ul>
+</nav>
 
   <!-- Landing -->
 <section class="hero" id="landing">
@@ -618,6 +659,37 @@
     document.getElementById("profile").classList.remove("active");
     document.getElementById("appointment").style.display = "block";
   }
+
+  function goHome() {
+    document.getElementById("landing").style.display = "block";
+    document.getElementById("profile").classList.remove("active");
+    document.getElementById("appointment").style.display = "none";
+  }
+
+  // ===== Toggle Menu (☰ ↔ ✖) =====
+  function toggleMenu() {
+    const menu = document.getElementById("menu");
+    const btn = document.getElementById("menuBtn");
+    const isOpen = menu.style.display === "block";
+
+    if (isOpen) {
+      menu.style.display = "none";
+      btn.textContent = "☰"; // back to menu icon
+    } else {
+      menu.style.display = "block";
+      btn.textContent = "✖"; // switch to X
+    }
+  }
+
+  // ===== Optional: close menu if clicking outside =====
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById("menu");
+    const btn = document.getElementById("menuBtn");
+
+    if (menu.style.display === "block" && !menu.contains(e.target) && e.target !== btn) {
+      toggleMenu();
+    }
+  });
 
   // ===== Swiper =====
   var swiper = new Swiper(".mySwiper", {
