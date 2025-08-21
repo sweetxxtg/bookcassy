@@ -421,6 +421,45 @@
   box-sizing: border-box;
 }
 
+.btn.secondary {
+  background: #fff;
+  color: #d10000; /* matches your branding (red accent) */
+  border: 2px solid #d10000;
+  margin-top: 10px;
+}
+.btn.secondary:hover {
+  background: #d10000;
+  color: #fff;
+}
+
+/* Simple avatar style */
+.review-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.review-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.small-avatar {
+  width: 30px;
+  height: 30px;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
   .rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
   .rate-option { padding: 15px; background: #f4f4f4; text-align: center; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
   .rate-option:hover { background: #eee; }
@@ -463,10 +502,58 @@
   <div class="hero-content">
     <h1>Cassy Jacquelyn</h1>
     <p>Here to Turn your fantasies to reality 💋</p>
+
+    <!-- Main CTA Buttons -->
     <button class="btn" onclick="showProfile()">My Profile</button>
     <button class="btn" onclick="showAppointment()">Book an Appointment</button>
+
+    <!-- New Reviews Button -->
+    <button class="btn secondary" onclick="showReviews()">⭐ View Past Reviews</button>
   </div>
 </section>
+
+<!-- Reviews Section -->
+<section id="reviews" style="display:none; padding: 30px; max-width: 700px; margin: auto;">
+  <h2 class="title">What Our Clients Say</h2>
+  
+  <!-- Reviews List -->
+  <div id="reviewsList" class="reviews-list">
+    <div class="review-card">
+      <strong>Sarah M.</strong> ⭐⭐⭐⭐⭐
+      <p>"Amazing experience! Professional and smooth process."</p>
+    </div>
+    <div class="review-card">
+      <strong>James L.</strong> ⭐⭐⭐⭐☆
+      <p>"Very satisfied. Will definitely book again!"</p>
+    </div>
+  </div>
+
+  <!-- Leave Review Form -->
+  <h3 class="subtitle">Leave a Review</h3>
+  <form id="reviewForm" class="review-form">
+    <div class="form-group">
+      <label>Name (optional)</label>
+      <input type="text" id="reviewName" placeholder="Enter name or leave blank">
+    </div>
+    <div class="form-group">
+      <label>Rating <span style="color:red">*</span></label>
+      <select id="reviewRating" required>
+        <option value="">Select</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐☆</option>
+        <option value="3">⭐⭐⭐☆☆</option>
+        <option value="2">⭐⭐☆☆☆</option>
+        <option value="1">⭐☆☆☆☆</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Comment (optional)</label>
+      <textarea id="reviewComment" placeholder="Leave a comment or skip"></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Submit Review</button>
+  </form>
+</section>
+
 
 <!-- ===== Appointment Booking Section ===== -->
 <section id="appointment" style="display:none;">
@@ -539,8 +626,20 @@
     </div>
 	
     <button type="submit" class="submit-btn">Submit Appointment Request</button>
-  </form>
+</form>
+
+<!-- Error message -->
+<div id="errorMessage" style="display:none; margin-top:15px; padding:15px; background:#fdeaea; border:1px solid #f5a5a5; border-radius:6px; color:#b30000; font-weight:600;">
+  ⚠️ Please complete all fields select a duration and send confirmation to cassy after submitting.
+</div>
+
+<!-- Success message -->
+<div id="confirmationMessage" style="display:none; margin-top:15px; padding:15px; background:#e6f7e6; border:1px solid #a3d7a3; border-radius:6px; color:#2d7a2d; font-weight:600;">
+  ✅ Your request has been submitted. Please contact Cassy to get your BOOKING - ID code.
+</div>
 </section>
+
+
 
   <!-- Profile -->
 <section class="profile-page" id="profile">
@@ -683,11 +782,12 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   // ===== Show Sections =====
-  function goHome() {
-  // Reset landing page to its default CSS, not forced "block"
+function goHome() {
+  // Reset landing page to its default CSS
   document.getElementById("landing").style.display = "";
   document.getElementById("profile").classList.remove("active");
   document.getElementById("appointment").style.display = "none";
+  document.getElementById("reviews").style.display = "none";
   localStorage.setItem("currentPage", "home");
 }
 
@@ -695,6 +795,7 @@ function showProfile() {
   document.getElementById("landing").style.display = "none";
   document.getElementById("profile").classList.add("active");
   document.getElementById("appointment").style.display = "none";
+  document.getElementById("reviews").style.display = "none";
   localStorage.setItem("currentPage", "profile");
 }
 
@@ -702,8 +803,173 @@ function showAppointment() {
   document.getElementById("landing").style.display = "none";
   document.getElementById("profile").classList.remove("active");
   document.getElementById("appointment").style.display = "block";
+  document.getElementById("reviews").style.display = "none";
   localStorage.setItem("currentPage", "appointment");
 }
+
+function showReviews() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("profile").classList.remove("active");
+  document.getElementById("appointment").style.display = "none";
+  document.getElementById("reviews").style.display = "block";
+  localStorage.setItem("currentPage", "reviews");
+}
+
+// ===== Handle Review Form =====
+// ===== Avatars Library =====
+const avatars = {
+  female: [
+    "https://i.imgur.com/b6hXKpV.png",
+    "https://i.imgur.com/3a1eD3q.png"
+  ],
+  male: [
+    "https://i.imgur.com/5cUQ2YB.png",
+    "https://i.imgur.com/G6W2fhp.png"
+  ],
+  neutral: [
+    "https://i.imgur.com/3XjH1dK.png",
+    "https://i.imgur.com/2kR0z4y.png"
+  ],
+  icons: [
+    "https://i.imgur.com/H8p1H9V.png",
+    "https://i.imgur.com/RwzQdWf.png"
+  ]
+};
+
+// ===== Helper: Pick random avatar =====
+function getRandomAvatar(genderGuess) {
+  let pool;
+  if (genderGuess === "female") pool = avatars.female;
+  else if (genderGuess === "male") pool = avatars.male;
+  else pool = avatars.neutral.concat(avatars.icons);
+
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+const reviewForm = document.getElementById("reviewForm");
+const reviewsList = document.getElementById("reviewsList");
+
+// Message container
+const messageBox = document.createElement("p");
+messageBox.id = "reviewMessage";
+messageBox.style.marginTop = "10px";
+messageBox.style.fontWeight = "600";
+reviewForm.appendChild(messageBox);
+
+// Hint box
+const hintBox = document.createElement("p");
+hintBox.textContent =
+  "ℹ️ For discretion, you can leave only a rating. A random avatar will represent your review.";
+hintBox.style.fontSize = "0.9em";
+hintBox.style.color = "#555";
+hintBox.style.marginTop = "8px";
+reviewForm.appendChild(hintBox);
+
+// ===== Save & Load Reviews =====
+function saveReview(review) {
+  let allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  allReviews.unshift(review); // newest first
+  localStorage.setItem("reviews", JSON.stringify(allReviews));
+}
+
+function loadReviews() {
+  const allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  reviewsList.innerHTML = ""; // clear existing
+
+  allReviews.forEach(r => {
+    const newReview = document.createElement("div");
+    newReview.classList.add("review-card");
+    newReview.innerHTML = `
+      <img src="${r.avatar}" alt="avatar" class="review-avatar ${r.isSmall ? "small-avatar" : ""}">
+      <div>
+        <strong>${r.name}</strong> ${"⭐".repeat(r.rating)}${"☆".repeat(5 - r.rating)}
+        ${r.comment ? `<p>"${r.comment}"</p>` : ""}
+      </div>
+    `;
+    reviewsList.appendChild(newReview);
+  });
+}
+
+// ===== Handle Submit =====
+if (reviewForm) {
+  reviewForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("reviewName").value.trim();
+    const rating = document.getElementById("reviewRating").value;
+    const comment = document.getElementById("reviewComment").value.trim();
+
+    if (!rating) {
+      showMessage("⚠️ Please select a rating before submitting.", "red", false);
+      return;
+    }
+
+    let guess = "neutral";
+    if (name) {
+      const lower = name.toLowerCase();
+      if (lower.endsWith("a") || lower.endsWith("y") || lower.endsWith("e")) {
+        guess = "female";
+      } else {
+        guess = "male";
+      }
+    }
+
+    const avatarSrc = getRandomAvatar(guess);
+    const isSmall = Math.random() < 0.3;
+
+    const reviewData = {
+      name: name || "Anonymous",
+      rating,
+      comment,
+      avatar: avatarSrc,
+      isSmall
+    };
+
+    // Save to localStorage
+    saveReview(reviewData);
+
+    // Reload list
+    loadReviews();
+
+    reviewForm.reset();
+    showMessage("✅ Thank you! Your review has been submitted.", "green", true);
+  });
+}
+
+// ===== Show Messages =====
+function showMessage(text, color, autoHide) {
+  messageBox.textContent = text;
+  messageBox.style.color = color;
+  messageBox.classList.remove("fade-out");
+
+  if (autoHide) {
+    setTimeout(() => {
+      messageBox.classList.add("fade-out");
+      setTimeout(() => {
+        messageBox.textContent = "";
+        messageBox.classList.remove("fade-out");
+      }, 1000);
+    }, 3000);
+  }
+}
+
+// ===== Load stored reviews on page load =====
+window.addEventListener("load", loadReviews);
+
+// ===== Restore Last Page on Refresh =====
+window.onload = function () {
+  const page = localStorage.getItem("currentPage") || "home";
+
+  if (page === "profile") {
+    showProfile();
+  } else if (page === "appointment") {
+    showAppointment();
+  } else if (page === "reviews") {
+    showReviews();
+  } else {
+    goHome(); // default to landing
+  }
+};
 
   // ===== Toggle Menu (☰ ↔ ✖) =====
   function toggleMenu() {
@@ -906,24 +1172,32 @@ if (paymentMethods.length) {
   });
 }
 
-  // ===== Appointment Form =====
-  const appointmentForm = document.getElementById("appointmentForm");
-  const rulesBox = document.getElementById("rulesBox");
-  const continueBtn = document.getElementById("continueBtn");
-  const agreeBox = document.getElementById("agreeBox");
-  const paymentSection = document.getElementById("paymentSection");
+  // Handle appointment form submit
+document.querySelector("#appointment form").addEventListener("submit", function(e) {
+  e.preventDefault(); // stop reload
 
-  if (appointmentForm) {
-    appointmentForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      alert("✅ Your appointment request has been submitted!");
-      appointmentForm.reset();
-      rulesBox.style.display = "none";
-      paymentSection.style.display = "none";
-      const popup = document.querySelector(".payment-overlay");
-      if (popup) popup.remove();
-    });
+  const firstName = document.getElementById("firstName")?.value.trim();
+  const lastName = document.getElementById("lastName")?.value.trim();
+  const phone = document.getElementById("phone")?.value.trim();
+
+  // Check if a duration is selected
+  const selectedDuration = document.querySelector(".rate-option.active");
+
+  // Email is optional, so we don't require it
+  if (!firstName || !lastName || !phone || !selectedDuration) {
+    document.getElementById("errorMessage").style.display = "block";
+    document.getElementById("confirmationMessage").style.display = "none";
+    return;
   }
+
+  // If all required fields are filled
+  document.getElementById("errorMessage").style.display = "none";
+  document.getElementById("confirmationMessage").style.display = "block";
+
+  // Optionally clear form inputs
+  this.reset();
+  document.querySelectorAll(".rate-option").forEach(el => el.classList.remove("active"));
+});
 
   // ===== Rate Selection & Rules =====
   const rateOptions = document.querySelectorAll(".rate-option");
