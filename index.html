@@ -16,6 +16,12 @@
       font-family: 'Nunito', sans-serif;
       background: #fff;
     }
+	
+	/* Lock scroll only on landing page */
+body.locked {
+  overflow: hidden;
+  height: 100vh;
+}
 
     /* HEADER */
     header {
@@ -49,30 +55,38 @@
       padding: 6px 10px;
       cursor: pointer;
     }
+	
+	/* Landing wrapper full screen (without footer) */
+.landing-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
-    /* HERO */
-    .hero {
-      background: url('https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large') no-repeat center center/cover;
-      height: calc(100vh - 65px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.55);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 92%;
-    }
+    /* Hero takes available space */
+.hero {
+  flex: 1;
+  background: url('https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 92%;
+}
+
     .hero h1 {
       font-size: clamp(22px, 5vw, 32px);
       margin-bottom: 8px;
@@ -320,30 +334,30 @@
       line-height: 1.5;
     }
 
-    /* FOOTER */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 12px;
-      font-size: 12px;
-      background: #000;
-      color: #aaa;
-      flex-wrap: wrap;
-    }
-    footer img {
-      width: 140px;
-      height: auto;
-    }
-    footer div {
-      margin: 2px 0;
-    }
+    /* Global footer always visible */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 12px;
+  background: #000;
+  color: #aaa;
+  flex-wrap: wrap;
+}
+footer img {
+  width: 140px;
+  height: auto;
+}
+footer div {
+  margin: 2px 0;
+}
 
-    @media (max-width: 480px) {
-      .btn { width: 90%; }
-      footer { flex-direction: column; text-align: center; }
-      footer img { margin-bottom: 6px; }
-    }
+@media (max-width: 480px) {
+  .btn { width: 90%; }
+  footer { flex-direction: column; text-align: center; }
+  footer img { margin-bottom: 6px; }
+}
   </style>
 </head>
 <body>
@@ -355,7 +369,8 @@
   </header>
 
   <!-- Landing -->
-  <section class="hero" id="landing">
+<div class="landing-wrapper" id="landing">
+  <section class="hero">
     <div class="hero-content">
       <h1>Cassy Jacquelyn</h1>
       <p>Here to Turn your fantasies to reality 💋</p>
@@ -363,6 +378,15 @@
       <button class="btn">Book an Appointment</button>
     </div>
   </section>
+</div>
+
+<!-- Global Footer -->
+<footer>
+  <div>© 2025 Pay4Booking</div>
+  <img src="https://www.pay4booking.com/wp-content/uploads/2025/05/pay4booking-logo.png" alt="Logo">
+  <div>All Rights Reserved</div>
+</footer>
+</div>
 
   <!-- Profile -->
 <section class="profile-page" id="profile">
@@ -428,11 +452,11 @@
     <!-- Swiper -->
 <div class="swiper mySwiper">
   <div class="swiper-wrapper">
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large" class="swiper-image"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large" class="swiper-image"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large" class="swiper-image"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large" class="swiper-image"></div>
-    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large" class="swiper-image"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Gmr2iUhWAAAqINW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Ex5xf70W8AEOY1i.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Fr2lXlsXgAA3uhW.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/GKrq_slWYAAfIIh.jpg:large"></div>
+    <div class="swiper-slide"><img src="https://pbs.twimg.com/media/Eyq4GxxU8Ag-sGc.jpg:large"></div>
   </div>
   <!-- Navigation -->
   <div class="swiper-button-next"></div>
@@ -502,10 +526,19 @@
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    function showProfile() {
-      document.getElementById("landing").style.display = "none";
-      document.getElementById("profile").classList.add("active");
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+  // lock scroll on load
+  document.body.classList.add("locked");
+});
+
+function showProfile() {
+  // hide landing
+  document.getElementById("landing").style.display = "none";
+  // show profile page
+  document.querySelector(".profile-page").classList.add("active");
+  // enable scroll
+  document.body.classList.remove("locked");
+}
 
     var swiper = new Swiper(".mySwiper", {
   slidesPerView: 3,
