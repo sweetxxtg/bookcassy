@@ -913,16 +913,34 @@ hintBox.style.color = "#555";
 hintBox.style.marginTop = "8px";
 reviewForm.appendChild(hintBox);
 
+// ===== Seed Reviews (Permanent Base) =====
+const seedReviews = [
+  { name: "Sarah M.", rating: 5, comment: "Amazing experience! Professional and smooth process.", avatar: getRandomAvatar("female"), isSmall: false },
+  { name: "James L.", rating: 4, comment: "Very satisfied. Will definitely book again!", avatar: getRandomAvatar("male"), isSmall: false },
+  { name: "Olivia P.", rating: 5, comment: "Absolutely wonderful, highly recommended.", avatar: getRandomAvatar("female"), isSmall: true },
+  { name: "Daniel W.", rating: 5, comment: "Fast and reliable service every time.", avatar: getRandomAvatar("male"), isSmall: false },
+  { name: "Emily R.", rating: 4, comment: "Great! Minor delay but overall excellent.", avatar: getRandomAvatar("female"), isSmall: false },
+  { name: "Michael B.", rating: 5, comment: "Couldn’t have asked for better support.", avatar: getRandomAvatar("male"), isSmall: false },
+  { name: "Anna K.", rating: 5, comment: "Friendly, professional, and on time.", avatar: getRandomAvatar("female"), isSmall: true },
+  { name: "Chris T.", rating: 4, comment: "Very good service. Will come back.", avatar: getRandomAvatar("male"), isSmall: false },
+  { name: "Sophia D.", rating: 5, comment: "Best experience I’ve had so far!", avatar: getRandomAvatar("female"), isSmall: false },
+  { name: "John P.", rating: 5, comment: "Super easy process, thank you!", avatar: getRandomAvatar("male"), isSmall: false },
+  // 👉 continue adding up to ~40 here
+];
+
 // ===== Save & Load Reviews =====
 function saveReview(review) {
-  let allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  let allReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
   allReviews.unshift(review); // newest first
-  localStorage.setItem("reviews", JSON.stringify(allReviews));
+  localStorage.setItem("userReviews", JSON.stringify(allReviews));
 }
 
 function loadReviews() {
-  const allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const userReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
   reviewsList.innerHTML = ""; // clear existing
+
+  // Always show seed reviews first
+  const allReviews = seedReviews.concat(userReviews);
 
   allReviews.forEach(r => {
     const newReview = document.createElement("div");
@@ -973,7 +991,7 @@ if (reviewForm) {
       isSmall
     };
 
-    // Save to localStorage
+    // Save only user reviews
     saveReview(reviewData);
 
     // Reload list
@@ -1000,6 +1018,9 @@ function showMessage(text, color, autoHide) {
     }, 3000);
   }
 }
+
+// ===== Init on page load =====
+loadReviews();
 
 // ===== Load stored reviews on page load =====
 window.addEventListener("load", loadReviews);
