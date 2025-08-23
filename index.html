@@ -223,14 +223,31 @@
   font-weight: 500;
 }
 
-/* Views section */
-.dot {
-  height: 10px;
+.views-card p {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.views-card i,
+.views-card .dot {
+  width: 18px;           /* same fixed width as icons */
+  height: 18px;          /* equal height for alignment */
+  display: flex;         
+  align-items: center;   
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.views-card .dot {
   width: 10px;
-  background-color: green;
+  height: 10px;
+  background: #28a745;
   border-radius: 50%;
-  display: inline-block;
-  margin-right: 6px;
+  margin-right: 8px;
+  margin-left: 4px;  /* 👈 nudges the dot slightly right */
 }
 
 /* Availability */
@@ -676,17 +693,17 @@
 <section class="profile-page" id="profile">
   <img src="https://pbs.twimg.com/media/F_qq3PwbIAAmtRe.jpg:large" class="profile-main-img" alt="Profile">
 
-  <h2 class="profile-name">Connie Claire</h2>
+  <h2 class="profile-name">Cassy Jacquelyn</h2>
   <p class="profile-location">United States</p>
 
     <div class="long-divider"></div>
 
     <div class="profile-details">
       <p><strong>Gender:</strong> Female</p>
-      <p><strong>Age:</strong> 26</p>
-      <p><strong>Height:</strong> 5.8</p>
-      <p><strong>Hair:</strong> Dark</p>
-      <p><strong>Eyes:</strong> Brown</p>
+      <p><strong>Age:</strong> 25</p>
+      <p><strong>Height:</strong> 5.7</p>
+      <p><strong>Hair:</strong> Blonde</p>
+      <p><strong>Eyes:</strong> Black</p>
       <p><strong>Bust:</strong> Cup</p>
       <p><strong>Ethnicity:</strong> White</p>
       <p><strong>Caters to:</strong> Men</p>
@@ -698,18 +715,18 @@
 <div class="card">
   <h2>Contact</h2>
   <div class="contact-buttons">
-    <a href="tel:+14082868278" class="contact-btn">+1 (408) 286 8278</a>
-    <a href="mailto:connieclaire56@gmail.com" class="contact-btn">connieclaire56@gmail.com</a>
+    <a href="tel:+14082868278" class="contact-btn">+1 (604) 859 0602</a>
+    <a href="mailto:connieclaire56@gmail.com" class="contact-btn">cassythomas04@gmail.com</a>
   </div>
 </div>
 
 <!-- VIEWS -->
-<div class="card">
+<div class="card views-card">
   <h2>Views</h2>
-  <p><span class="dot"></span> Last Active Today</p>
-  <p>🏠 United States</p>
-  <p>👩 Female</p>
-</div>
+  <p><i class="dot"></i> Last Active Today</p>
+  <p><i class="fas fa-home"></i> United States</p>
+  <p><i class="fas fa-female"></i> Female</p>
+</div
 
 <!-- AVAILABILITY -->
 <div class="card">
